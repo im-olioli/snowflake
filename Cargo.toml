@@ -1,0 +1,35 @@
+[package]
+name = "snowflake"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "snowflake"
+path = "src/lib.rs"
+
+[[bin]]
+name = "snowflake_server"
+path = "src/main.rs"
+
+[[bench]]
+name = "snowflake_bench"
+path = "benches/snowflake.rs"
+harness = false
+
+[dependencies]
+axum = {version = "0.8.9", features = ["http2"]}
+chrono = "0.4.45"
+dotenv = "0.15.0"
+tokio = {version = "1.53.1", features = ["rt-multi-thread"]}
+
+[dev-dependencies]
+chrono = "0.4.45"
+criterion = {version = "0.8.2", features = ["async_tokio"]}
+tokio = {version = "1.53.1", features = ["full"]}
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
